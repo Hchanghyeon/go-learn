@@ -16,9 +16,13 @@ func GetMembers(c *gin.Context){
 
 func CreateMember(c *gin.Context){
 	var createMemberRequest member.CreateMemberRequest
+	
+	if err := c.ShouldBindBodyWithJSON(&createMemberRequest); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+	}
 
-	c.ShouldBindBodyWithJSON(createMemberRequest)
-	member := memberService.CreateMember(createMemberRequest)
+	member := memberService.CreateMember(&createMemberRequest)
 
 	c.JSON(http.StatusOK, member)
 }

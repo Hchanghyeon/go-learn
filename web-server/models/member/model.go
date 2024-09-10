@@ -1,7 +1,7 @@
 package member
 
 type Member struct {
-	Id uint `json:"id"`
+	ID uint `json:"id" gorm:"primaryKey;autoIncrement"`
 	UserId string `json:"userId"`
 	Password string `json:"password"`
 	Nickname string `json:"nickname"`

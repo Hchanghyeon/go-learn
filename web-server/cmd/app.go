@@ -8,7 +8,6 @@ import (
 
 func main(){
 	var engine *gin.Engine = gin.Default()
-
 	routes.SetupRoutes(engine)
 
 	engine.Run()

@@ -1,17 +1,34 @@
 package member
 
 import (
+	"fmt"
+	dbConfig "web-server/config"
 	"web-server/models/member"
+	repository "web-server/repository/member"
 )
 
-func CreateMember(createMemberRequest member.CreateMemberRequest)(member.Member){
+var memberRepository repository.MemberRepository
+
+func init(){
+	db := dbConfig.GetDB()
+
+	if(db == nil){
+		fmt.Println("error");
+	}
+
+	memberRepository = &repository.MysqlMemberRepository{DB: db}
+}
+
+func CreateMember(createMemberRequest *member.CreateMemberRequest)(member.Member){
+	
 	member := member.Member{
-		Id: 1,
-		UserId: createMemberRequest.UserId,
-		Password: createMemberRequest.Password,
 		Nickname: createMemberRequest.Nickname,
+		Password:createMemberRequest.Password,
+		UserId: createMemberRequest.UserId,
 		Age: createMemberRequest.Age,
 	}
 
+	memberRepository.Save(&member)
+
 	return member
-}
+} 
