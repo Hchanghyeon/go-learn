@@ -32,3 +32,8 @@ func CreateMember(createMemberRequest *member.CreateMemberRequest)(member.Member
 
 	return member
 } 
+
+func FindByID(id uint)(*member.Member){
+	member , _ := memberRepository.FindByID(id)
+	return member
+}
